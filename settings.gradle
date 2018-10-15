@@ -1,1 +1,1 @@
-include ':app', ':pdfviewlibrary'
+include ':app', ':pdfviewlibrary','vitamio'

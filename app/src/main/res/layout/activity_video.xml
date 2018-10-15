@@ -1,100 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <com.example.a11059.mlearning.widget.VideoGestureRelativeLayout
+    <io.vov.vitamio.widget.CenterLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ly_VG"
-        tools:context=".MainActivity">
+        android:orientation="vertical" >
 
-        <SurfaceView
-            android:id="@+id/surfaceView"
+        <io.vov.vitamio.widget.VideoView
+            android:id="@+id/buffer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </io.vov.vitamio.widget.CenterLayout>
 
-        <RelativeLayout
-            android:id="@+id/layout_buttom"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal" >
 
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/bg_bottom_shadow"
-            android:visibility="invisible">
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="false"
-                android:layout_weight="1"
-                android:layout_gravity="right|bottom"
-                android:layout_above="@+id/current_time"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-            <ImageButton
-                android:id="@+id/play_bt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/video_player"
-                android:layout_gravity="left|bottom"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/current_time"
-                android:textColor="@color/video_title_background_color"
-                android:paddingBottom="5dp"
-                android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@+id/play_bt"
-                android:layout_toEndOf="@+id/play_bt"
-                android:text="00:00:00/00:00:00"/>
+        <ProgressBar
+            android:id="@+id/probar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/download_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="" />
 
-        <RelativeLayout
-            android:id="@+id/layout_top"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_top_shadow"
-            android:visibility="invisible">
-            <ImageButton
-                android:id="@+id/Button_return"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_back"
-                android:layout_alignParentTop="true"
-                android:paddingLeft="15dp"/>
-            <TextView
-                android:id="@+id/title_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|bottom"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/Button_return"
-                android:layout_toEndOf="@+id/Button_return"
-                android:textColor="@color/video_title_background_color"/>
-
-        </RelativeLayout>
-
-
-        <com.example.a11059.mlearning.widget.ShowChangeLayout
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
-            android:id="@+id/scl">
-        </com.example.a11059.mlearning.widget.ShowChangeLayout>
-
-
-    </com.example.a11059.mlearning.widget.VideoGestureRelativeLayout>
-
+        <TextView
+            android:id="@+id/load_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="" />
+    </LinearLayout>
 
 </RelativeLayout>
