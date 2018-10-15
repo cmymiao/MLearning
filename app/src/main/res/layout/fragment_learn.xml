@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="?attr/app_primary_color">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/train_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qmui_config_color_white">
+
+        <LinearLayout
+            android:id="@+id/selection"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:background="@color/qmui_config_color_background">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/qmui_config_color_white">
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/sequence_learning"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+                        android:text="顺序学习"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_sqeuence"/>
+
+                    <Button
+                        android:id="@+id/random_learning"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="15dp"
+                        android:text="随机练习"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_random"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_round_train_top1"
+                        app:qmui_border_color="#BCEDFE"
+                        app:qmui_border_width="8dp"
+                        app:qmui_is_circle="true"/>
+
+                    <View
+                        android:id="@+id/center_point1"
+                        android:layout_width="1px"
+                        android:layout_height="1px"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:layout_above="@+id/center_point1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="做题"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="17sp"/>
+
+                    <TextView
+                        android:layout_below="@+id/center_point1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="达人"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="17sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/unit_learning"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+                        android:text="单元训练"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_chapter"/>
+
+                    <Button
+                        android:id="@+id/simulate_exam"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="15dp"
+                        android:text="模拟考试"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_exam"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:background="@color/qmui_config_color_white">
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/mistake"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+                        android:text="错题集"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_error"/>
+
+                    <Button
+                        android:id="@+id/statistics"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="15dp"
+                        android:text="答题统计"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_history"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_round_train_top2"
+                        app:qmui_border_color="#FF8C69"
+                        app:qmui_border_width="8dp"
+                        app:qmui_is_circle="true"/>
+
+                    <View
+                        android:id="@+id/center_point2"
+                        android:layout_width="1px"
+                        android:layout_height="1px"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:layout_above="@+id/center_point2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="学习"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="17sp"/>
+
+                    <TextView
+                        android:layout_below="@+id/center_point2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="资料"
+                        android:textColor="@color/qmui_config_color_white"
+                        android:textSize="17sp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/collection"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+                        android:text="收藏夹"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_collection"/>
+
+                    <Button
+                        android:id="@+id/material"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="15dp"
+                        android:text="学习资料"
+                        android:background="@color/transparent"
+                        android:drawableTop="@drawable/ic_train_table"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,21 @@
+<litepal>
+
+    <dbname value="localDB"></dbname>
+
+    <version value="1"></version>
+
+    <list>
+
+        <mapping class="com.example.a11059.mlearning.entity.MistakeL"></mapping>
+
+        <mapping class="com.example.a11059.mlearning.entity.CollectionL"></mapping>
+
+        <mapping class="com.example.a11059.mlearning.entity.RecordL"></mapping>
+
+        <mapping class="com.example.a11059.mlearning.entity.HistoryL"></mapping>
+
+        <mapping class="com.example.a11059.mlearning.entity.SequenceGroupL"></mapping>
+
+    </list>
+
+</litepal>

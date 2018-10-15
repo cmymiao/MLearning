@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/home_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"/>
+
+    <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+        android:id="@+id/problem_group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/qmui_config_color_background">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/problem_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.qmuiteam.qmui.widget.QMUIEmptyView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_background" />
+
+    </FrameLayout>
+
+</LinearLayout>

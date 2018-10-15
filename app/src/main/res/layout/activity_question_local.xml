@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/app_primary_color"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/questionl_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/qmui_config_color_background">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/questionl_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.qmuiteam.qmui.widget.QMUIEmptyView
+            android:id="@+id/questionl_emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_background" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/questionl_bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_tab_height"
+        android:background="?attr/qmui_list_item_bg_with_border_top">
+
+        <Button
+            android:id="@+id/btn_analyzel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="解析"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:drawableTop="@drawable/ic_bottombar_explain"
+            android:background="@color/transparent" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

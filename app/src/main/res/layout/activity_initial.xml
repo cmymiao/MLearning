@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.InitialActivity"
+    android:background="@drawable/login_bg">
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+        android:id="@+id/initial_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:layout_centerInParent="true"
+        android:background="@color/translucentWhite"
+        android:orientation="vertical"
+        app:qmui_outerNormalColor="?attr/qmui_config_color_background"
+        app:qmui_borderColor="?attr/qmui_config_color_separator"
+        app:qmui_showBorderOnlyBeforeL="true"
+        android:padding="20dp"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="请完善个人信息"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="昵称："/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/ic_edittext_username"
+                android:drawablePadding="8dp"
+                android:background="@drawable/login_edittext_selector"
+                android:textCursorDrawable="@null"
+                android:inputType="text"
+                android:hint="请输入昵称"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/clr_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/nickname"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/edit_del" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="新密码："/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/ic_edittext_password"
+                android:drawablePadding="8dp"
+                android:background="@drawable/login_edittext_selector"
+                android:textCursorDrawable="@null"
+                android:inputType="textPassword"
+                android:digits="@string/digitsSet"
+                android:hint="请输入您的密码"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/clr_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/password"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/edit_del" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="确认密码："/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/ic_edittext_password"
+                android:drawablePadding="8dp"
+                android:background="@drawable/login_edittext_selector"
+                android:textCursorDrawable="@null"
+                android:inputType="textPassword"
+                android:digits="@string/digitsSet"
+                android:hint="请再次输入新密码"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/clr_confirm_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/confirm_password"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/edit_del" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="电话："/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/mobilPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/ic_mobilphone"
+                android:drawablePadding="8dp"
+                android:background="@drawable/login_edittext_selector"
+                android:textCursorDrawable="@null"
+                android:inputType="number"
+                android:maxLength="11"
+                android:hint="请输入手机号码"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/clr_mobilPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/mobilPhoneNumber"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/edit_del" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="邮箱："/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="8dp"
+                android:background="@drawable/login_edittext_selector"
+                android:textCursorDrawable="@null"
+                android:inputType="textEmailAddress"
+                android:hint="请输入邮箱"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/clr_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignEnd="@+id/email"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/edit_del" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="班级与课程："/>
+
+            <TextView
+                android:id="@+id/classInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/login_edittext_selector"
+                android:hint="请选择班级"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/courseInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:enabled="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/login_edittext_selector"
+                android:hint="请选择课程"
+                android:textSize="15sp"/>
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/btn_initial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp"
+            android:text="提交"
+            app:qmui_isRadiusAdjustBounds="true"/>
+
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+
+</RelativeLayout>

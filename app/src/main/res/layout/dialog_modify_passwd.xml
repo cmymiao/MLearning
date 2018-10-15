@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="?attr/qmui_dialog_padding_horizontal"
+    android:paddingEnd="?attr/qmui_dialog_padding_horizontal">
+
+    <EditText
+        android:id="@+id/old_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="请输入原密码"
+        android:textSize="15sp"
+        android:maxLength="15"
+        android:inputType="textPassword"
+        android:background="@drawable/mine_edittext_selector"/>
+
+    <EditText
+        android:id="@+id/new_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="请输入新密码"
+        android:textSize="15sp"
+        android:maxLength="15"
+        android:inputType="textPassword"
+        android:background="@drawable/mine_edittext_selector"/>
+
+    <EditText
+        android:id="@+id/confirm_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="再次输入新密码"
+        android:textSize="15sp"
+        android:maxLength="15"
+        android:inputType="textPassword"
+        android:background="@drawable/mine_edittext_selector"/>
+
+</LinearLayout>
