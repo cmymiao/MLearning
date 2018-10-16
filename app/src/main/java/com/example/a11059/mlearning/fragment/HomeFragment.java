@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
         initTopBar(fragmentView);
-        initGroupList(fragmentView);
+       // initGroupList(fragmentView);
         return fragmentView;
     }
 
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         QMUITopBar mTopBar = view.findViewById(R.id.home_topbar);
         mTopBar.setTitle("主页");
     }
-
+/*
     private void initGroupList(View view){
         QMUIGroupListView groupList = (QMUIGroupListView) view.findViewById(R.id.problem_group_list);
 
@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 .addItemView(problemsView, problemsViewListener())
                 .addTo(groupList);
     }
-
+*/
     private View.OnClickListener studentInfoViewListener(){
         return null;
     }
