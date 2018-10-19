@@ -456,6 +456,7 @@ public class UtilDatabase {
     }
 
     public static void findUnits(final LearnFragment fragment){
+        User user = BmobUser.getCurrentUser(User.class);
         BmobQuery<Unit> query = new BmobQuery<>();
         query.addWhereEqualTo("courseId", user.getCourseId());
         query.findObjects(new FindListener<Unit>() {
@@ -475,6 +476,7 @@ public class UtilDatabase {
     }
 
     public static void findKnowledge(final LearnFragment fragment){
+        User user = BmobUser.getCurrentUser(User.class);
         BmobQuery<Knowledge> query = new BmobQuery<>();
         query.addWhereEqualTo("courseId", user.getCourseId());
         query.findObjects(new FindListener<Knowledge>() {
@@ -504,6 +506,7 @@ public class UtilDatabase {
     }
 
     public static void findSchedule(final LearnFragment fragment){
+        User user = BmobUser.getCurrentUser(User.class);
         String classId = user.getClassId();
         BmobQuery<Class> query = new BmobQuery<>();
         query.addWhereEqualTo("id", classId);
@@ -523,6 +526,7 @@ public class UtilDatabase {
     }
 
     public static void findCourseInfo(final LearnFragment fragment, final String type){
+        User user = BmobUser.getCurrentUser(User.class);
         int courseId = user.getCourseId();
         BmobQuery<Course> query = new BmobQuery<>();
         query.addWhereEqualTo("id", courseId);
@@ -554,6 +558,7 @@ public class UtilDatabase {
     }
 
     public static void findAllProblem(final QuizFragment fragment){
+        User user = BmobUser.getCurrentUser(User.class);
         String studentId = user.getUsername();
         BmobQuery<Problem> query = new BmobQuery<>();
         query.addWhereEqualTo("studentId", studentId);
@@ -573,6 +578,7 @@ public class UtilDatabase {
     }
 
     public static void addProblem(final QuizFragment fragment, final String p){
+        User user = BmobUser.getCurrentUser(User.class);
         final String studentId = user.getUsername();
         BmobQuery<Problem> query = new BmobQuery<>();
         query.addWhereEqualTo("studentId", studentId);
@@ -606,6 +612,7 @@ public class UtilDatabase {
 
     public static void findStatisticUnit(final StudentStatisticActivity activity){
         statisticList.clear();
+        User user = BmobUser.getCurrentUser(User.class);
         String studentId = user.getUsername();
         BmobQuery<Feedback> query = new BmobQuery<>();
         query.addWhereEqualTo("username", studentId);
@@ -639,6 +646,7 @@ public class UtilDatabase {
 
     public static void findStatisticClass(final StudentStatisticActivity activity){
         statisticList.clear();
+        User user = BmobUser.getCurrentUser(User.class);
         String classId = user.getClassId();
         BmobQuery<Feedback> query = new BmobQuery<>();
         query.addWhereEqualTo("classId", classId);
@@ -694,6 +702,7 @@ public class UtilDatabase {
     }
 
     public static void findAllResources(final ResourceActivity activity, int unitId, int knowledgeId) {
+        User user = BmobUser.getCurrentUser(User.class);
         int courseId = user.getCourseId();
         BmobQuery<Resource> q1 = new BmobQuery<>();
         q1.addWhereEqualTo("courseId", courseId);
@@ -725,6 +734,7 @@ public class UtilDatabase {
     }
 
     public static void findResourceByType(final ResourceActivity activity, int unitId, int knowledgeId, String type){
+        User user = BmobUser.getCurrentUser(User.class);
         int courseId = user.getCourseId();
         BmobQuery<Resource> q1 = new BmobQuery<>();
         q1.addWhereEqualTo("courseId", courseId);
@@ -771,6 +781,19 @@ public class UtilDatabase {
     }
 
     public static void findProblemInfo(final HomeFragment fragment){
-
+        BmobQuery<Problem> query = new BmobQuery<>();
+        query.order("-createdAt").findObjects(new FindListener<Problem>() {
+            @Override
+            public void done(List<Problem> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    problemList = list;
+                    message.what = PROBLEM_INFO;
+                }else{
+                    message.what = ERROR_PROBLEM;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
     }
 }
