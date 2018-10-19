@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.a11059.mlearning.R;
 import com.example.a11059.mlearning.activity.LoginActivity;
 import com.example.a11059.mlearning.activity.StudentMainActivity;
+import com.example.a11059.mlearning.activity.TeacherMainActivity;
 import com.example.a11059.mlearning.entity.Feedback;
 import com.example.a11059.mlearning.entity.HistoryL;
 import com.example.a11059.mlearning.entity.User;
@@ -106,7 +107,9 @@ public class MineFragment extends Fragment {
 
     private QMUIDialog modifyDialog;
 
-    private StudentMainActivity parentActivity;
+    private StudentMainActivity parentActivityS;
+
+    private TeacherMainActivity parentActivityT;
 
     private boolean modifyWaitingFlag = false;
 
@@ -169,11 +172,19 @@ public class MineFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parentActivity = (StudentMainActivity) getActivity();
+
+        //parentActivity = (StudentMainActivity) getActivity();
         user = BmobUser.getCurrentUser(User.class);
         if(user == null){ //验证当前登录人是否存在
+            parentActivityS = (StudentMainActivity) getActivity();
             LoginActivity.actionStart(getActivity(), false);
-            parentActivity.finish();
+            parentActivityS.finish();
+        }else {
+            if(user.getIdentity().equals("student")){
+                parentActivityS = (StudentMainActivity) getActivity();
+            }else {
+                parentActivityT = (TeacherMainActivity) getActivity();
+            }
         }
     }
 
@@ -607,7 +618,12 @@ public class MineFragment extends Fragment {
             case MODIFY_PASSWD_SUCCESS:
                 showTip(TIP_TYPE_SUCCESS, "密码修改成功", DEFAULT_TIP_DURATION);
                 LoginActivity.actionStart(getActivity(), true);
-                parentActivity.finish();
+                if(user.getIdentity().equals("student")){
+                    parentActivityS.finish();
+                }else {
+                    parentActivityT.finish();
+                }
+
                 break;
         }
     }
@@ -634,7 +650,13 @@ public class MineFragment extends Fragment {
     }
 
     private void showTip(int type, String tipWord, long duration){
-        QMUITipDialog.Builder tipBuilder = new QMUITipDialog.Builder(parentActivity);
+        QMUITipDialog.Builder tipBuilder = null;
+        if(user.getIdentity().equals("student")){
+            tipBuilder = new QMUITipDialog.Builder(parentActivityS);
+        }else {
+            tipBuilder = new QMUITipDialog.Builder(parentActivityT);
+        }
+
         if(type == TIP_TYPE_SUCCESS){
             tipBuilder = tipBuilder.setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS);
         } else if(type == TIP_TYPE_FAIL){
@@ -652,10 +674,16 @@ public class MineFragment extends Fragment {
     }
 
     private void showExitConfirmDialog(){
-        final QMUIDialog.CheckBoxMessageDialogBuilder builder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivity);
+        QMUIDialog.CheckBoxMessageDialogBuilder builder = null;
+        if (user.getIdentity().equals("student")){
+            builder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivityS);
+        }else {
+            builder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivityT);
+        }
         builder.setTitle("是否退出当前账号？")
                 .setMessage("清除此账号本地练习记录")
                 .setChecked(false);
+        final QMUIDialog.CheckBoxMessageDialogBuilder finalBuilder = builder;
         builder.addAction("取消", new QMUIDialogAction.ActionListener() {
             @Override
             public void onClick(QMUIDialog dialog, int index) {
@@ -666,13 +694,17 @@ public class MineFragment extends Fragment {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        if(builder.isChecked()){
+                        if(finalBuilder.isChecked()){
                             //清除本地练习记录
                             DataSupport.deleteAll(HistoryL.class, "username = ?", user.getUsername());
                         }
                         BmobUser.logOut();//登出当前用户
                         LoginActivity.actionStart(getActivity(), false);
-                        parentActivity.finish();
+                        if(user.getIdentity().equals("student")){
+                            parentActivityS.finish();
+                        }else {
+                            parentActivityT.finish();
+                        }
                     }
                 });
         builder.create().show();
@@ -752,17 +784,32 @@ public class MineFragment extends Fragment {
 
     private void uploadUserImage(){
         //先检测权限，有则继续，无则申请
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(parentActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(parentActivity, new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, REQUEST_PERMISSION_STORAGE);
-            if(ActivityCompat.shouldShowRequestPermissionRationale(parentActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                showTip(TIP_TYPE_FAIL, "读写存储权限被拒绝", DEFAULT_TIP_DURATION);
+        if(user.getIdentity().equals("student")){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(parentActivityS, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(parentActivityS, new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, REQUEST_PERMISSION_STORAGE);
+                if(ActivityCompat.shouldShowRequestPermissionRationale(parentActivityS, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    showTip(TIP_TYPE_FAIL, "读写存储权限被拒绝", DEFAULT_TIP_DURATION);
+                }
+            }
+            else{
+                realUploadUserImage();
+            }
+        }else {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(parentActivityT, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(parentActivityT, new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, REQUEST_PERMISSION_STORAGE);
+                if(ActivityCompat.shouldShowRequestPermissionRationale(parentActivityT, Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    showTip(TIP_TYPE_FAIL, "读写存储权限被拒绝", DEFAULT_TIP_DURATION);
+                }
+            }
+            else{
+                realUploadUserImage();
             }
         }
-        else{
-            realUploadUserImage();
-        }
+
     }
 
     private void realUploadUserImage(){

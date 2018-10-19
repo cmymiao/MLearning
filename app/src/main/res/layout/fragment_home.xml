@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?attr/app_primary_color"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -12,6 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height" />
 
+    <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+        android:id="@+id/info_group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,7 +23,7 @@
         android:background="@color/qmui_config_color_background">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/resource_recyclerview"
+            android:id="@+id/problem_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

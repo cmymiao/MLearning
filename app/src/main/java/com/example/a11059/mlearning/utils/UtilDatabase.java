@@ -21,6 +21,7 @@ import com.example.a11059.mlearning.entity.Resource;
 import com.example.a11059.mlearning.entity.Statistic;
 import com.example.a11059.mlearning.entity.Unit;
 import com.example.a11059.mlearning.entity.User;
+import com.example.a11059.mlearning.fragment.HomeFragment;
 import com.example.a11059.mlearning.fragment.LearnFragment;
 import com.example.a11059.mlearning.fragment.MineFragment;
 import com.example.a11059.mlearning.fragment.QuizFragment;
@@ -721,5 +722,55 @@ public class UtilDatabase {
                 activity.handler.sendMessage(message);
             }
         });
+    }
+
+    public static void findResourceByType(final ResourceActivity activity, int unitId, int knowledgeId, String type){
+        int courseId = user.getCourseId();
+        BmobQuery<Resource> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("courseId", courseId);
+        BmobQuery<Resource> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+        BmobQuery<Resource> q3 = new BmobQuery<>();
+        q3.addWhereEqualTo("knowledgeId", knowledgeId);
+        BmobQuery<Resource> q4 = new BmobQuery<>();
+        q4.addWhereEqualTo("type", type);
+
+        List<BmobQuery<Resource>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+        queryList.add(q3);
+        queryList.add(q4);
+
+        BmobQuery<Resource> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Resource>() {
+            @Override
+            public void done(List<Resource> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    resourceList = list;
+                    message.what = ALL_RESOURCE_INFO;
+                }else {
+                    message.what = ERROR_RESOURCES;
+                }
+                activity.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void findStudentsInfo(final HomeFragment fragment){
+
+    }
+
+    public static void findResourceInfo(final HomeFragment fragment){
+
+    }
+
+    public static void findQuestionInfo(final HomeFragment fragment){
+
+    }
+
+    public static void findProblemInfo(final HomeFragment fragment){
+
     }
 }

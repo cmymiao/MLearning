@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
+import com.bumptech.glide.util.Util;
 import com.example.a11059.mlearning.R;
 import com.example.a11059.mlearning.activity.TeacherMainActivity;
 import com.example.a11059.mlearning.entity.User;
 import com.example.a11059.mlearning.utils.UtilDatabase;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -23,6 +26,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private View fragmentView;
 
     private TeacherMainActivity parentActivity;
+
+    private QMUIEmptyView emptyView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +41,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
         initTopBar(fragmentView);
-       // initGroupList(fragmentView);
+        initEmptyView(fragmentView);
+        initGroupList(fragmentView);
         return fragmentView;
     }
 
@@ -44,9 +50,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         QMUITopBar mTopBar = view.findViewById(R.id.home_topbar);
         mTopBar.setTitle("主页");
     }
-/*
+
+    private void initEmptyView(View view){
+        emptyView = (QMUIEmptyView) view.findViewById(R.id.emptyView);
+        emptyView.hide();
+    }
+
     private void initGroupList(View view){
-        QMUIGroupListView groupList = (QMUIGroupListView) view.findViewById(R.id.problem_group_list);
+        QMUIGroupListView groupList = (QMUIGroupListView) view.findViewById(R.id.info_group_list);
 
         //section1
         QMUICommonListItemView studentInfoView = groupList.createItemView("浏览学生信息");
@@ -65,27 +76,51 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         //section2
         QMUICommonListItemView problemsView = groupList.createItemView("查看问题并解答");
         problemsView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
+        problemsView.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b == true){
+                    emptyView.show(true);
+                    UtilDatabase.findProblemInfo(HomeFragment.this);
+                }else {
+                    emptyView.show(false);
+                }
+
+            }
+        });
         QMUIGroupListView.newSection(getContext())
                 .setTitle("问答")
-                .addItemView(problemsView, problemsViewListener())
+                .addItemView(problemsView, null)
                 .addTo(groupList);
     }
-*/
+
     private View.OnClickListener studentInfoViewListener(){
-        return null;
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UtilDatabase.findStudentsInfo(HomeFragment.this);
+            }
+        };
     }
 
     private View.OnClickListener resourceViewListener(){
-        return null;
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UtilDatabase.findResourceInfo(HomeFragment.this);
+            }
+        };
     }
 
     private View.OnClickListener questionViewListener(){
-        return null;
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UtilDatabase.findQuestionInfo(HomeFragment.this);
+            }
+        };
     }
 
-    private View.OnClickListener problemsViewListener(){
-        return null;
-    }
 
 
 
