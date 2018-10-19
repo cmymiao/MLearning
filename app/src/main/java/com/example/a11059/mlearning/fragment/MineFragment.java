@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,13 +16,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.net.Uri;
 
 import com.bumptech.glide.Glide;
 import com.example.a11059.mlearning.R;
@@ -214,14 +213,25 @@ public class MineFragment extends Fragment {
 
         //section 1
         QMUICommonListItemView studentIdView = groupList.createItemView("学号");
+        QMUICommonListItemView teacherIdView = groupList.createItemView("工号");
         studentIdView.setDetailText(user.getUsername());
+        teacherIdView.setDetailText(user.getUsername());
         QMUICommonListItemView studentNameView = groupList.createItemView("姓名");
         studentNameView.setDetailText(user.getName());
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("基本信息")
-                .addItemView(studentIdView, null)
-                .addItemView(studentNameView, null)
-                .addTo(groupList);
+        if (user.getIdentity().equals("student")){
+            QMUIGroupListView.newSection(getContext())
+                    .setTitle("基本信息")
+                    .addItemView(studentIdView, null)
+                    .addItemView(studentNameView, null)
+                    .addTo(groupList);
+        }else {
+            QMUIGroupListView.newSection(getContext())
+                    .setTitle("基本信息")
+                    .addItemView(teacherIdView, null)
+                    .addItemView(studentNameView, null)
+                    .addTo(groupList);
+        }
+
 
         //section 2
         userImage = groupList.createItemView("上传头像");
@@ -275,12 +285,19 @@ public class MineFragment extends Fragment {
         exitIcon.setImageResource(R.drawable.ic_exit_login);
         exitLogin.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         exitLogin.addAccessoryCustomView(exitIcon);
+        if (user.getIdentity().equals("student")){
+            QMUIGroupListView.newSection(getContext())
+                    .setTitle("其他")
+                    .addItemView(clearHistory, clearHistoryListener())
+                    .addItemView(exitLogin, getExitLoginListener())
+                    .addTo(groupList);
+        }else {
+            QMUIGroupListView.newSection(getContext())
+                    .setTitle("其他")
+                    .addItemView(exitLogin, getExitLoginListener())
+                    .addTo(groupList);
+        }
 
-        QMUIGroupListView.newSection(getContext())
-                .setTitle("其他")
-                .addItemView(clearHistory, clearHistoryListener())
-                .addItemView(exitLogin, getExitLoginListener())
-                .addTo(groupList);
     }
 
     private View.OnClickListener uploadUserImageListener(){
@@ -674,40 +691,70 @@ public class MineFragment extends Fragment {
     }
 
     private void showExitConfirmDialog(){
-        QMUIDialog.CheckBoxMessageDialogBuilder builder = null;
         if (user.getIdentity().equals("student")){
-            builder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivityS);
+            QMUIDialog.CheckBoxMessageDialogBuilder Sbuilder = null;
+            Sbuilder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivityS);
+            Sbuilder.setTitle("是否退出当前账号？")
+                    .setMessage("清除此账号本地练习记录")
+                    .setChecked(false);
+            final QMUIDialog.CheckBoxMessageDialogBuilder finalBuilder = Sbuilder;
+            Sbuilder.addAction("取消", new QMUIDialogAction.ActionListener() {
+                @Override
+                public void onClick(QMUIDialog dialog, int index) {
+                    dialog.dismiss();
+                }
+            })
+                    .addAction(0, "退出", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
+                        @Override
+                        public void onClick(QMUIDialog dialog, int index) {
+                            dialog.dismiss();
+                            if(finalBuilder.isChecked()){
+                                //清除本地练习记录
+                                DataSupport.deleteAll(HistoryL.class, "username = ?", user.getUsername());
+                            }
+                            BmobUser.logOut();//退出当前用户
+                            LoginActivity.actionStart(getActivity(), false);
+//                            if(user.getIdentity().equals("student")){
+                                parentActivityS.finish();
+//                            }else {
+//                                parentActivityT.finish();
+//                            }
+                        }
+                    });
+            Sbuilder.create().show();
         }else {
-            builder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivityT);
+            QMUIDialog.CheckBoxMessageDialogBuilder Tbuilder = null;
+            Tbuilder = new QMUIDialog.CheckBoxMessageDialogBuilder(parentActivityT);
+            Tbuilder.setTitle("是否退出当前账号？")
+                    .setMessage("清除此账号缓存数据")
+                    .setChecked(false);
+            final QMUIDialog.CheckBoxMessageDialogBuilder finalBuilder = Tbuilder;
+            Tbuilder.addAction("取消", new QMUIDialogAction.ActionListener() {
+                @Override
+                public void onClick(QMUIDialog dialog, int index) {
+                    dialog.dismiss();
+                }
+            })
+                    .addAction(0, "退出", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
+                        @Override
+                        public void onClick(QMUIDialog dialog, int index) {
+                            dialog.dismiss();
+                            if(finalBuilder.isChecked()){
+                                //清除本地练习记录
+                                DataSupport.deleteAll(HistoryL.class, "username = ?", user.getUsername());
+                            }
+                            BmobUser.logOut();//退出当前用户
+                            LoginActivity.actionStart(getActivity(), false);
+//                            if(user.getIdentity().equals("student")){
+//                            parentActivityS.finish();
+//                            }else {
+                                parentActivityT.finish();
+//                            }
+                        }
+                    });
+            Tbuilder.create().show();
         }
-        builder.setTitle("是否退出当前账号？")
-                .setMessage("清除此账号本地练习记录")
-                .setChecked(false);
-        final QMUIDialog.CheckBoxMessageDialogBuilder finalBuilder = builder;
-        builder.addAction("取消", new QMUIDialogAction.ActionListener() {
-            @Override
-            public void onClick(QMUIDialog dialog, int index) {
-                dialog.dismiss();
-            }
-        })
-                .addAction(0, "退出", QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                        if(finalBuilder.isChecked()){
-                            //清除本地练习记录
-                            DataSupport.deleteAll(HistoryL.class, "username = ?", user.getUsername());
-                        }
-                        BmobUser.logOut();//登出当前用户
-                        LoginActivity.actionStart(getActivity(), false);
-                        if(user.getIdentity().equals("student")){
-                            parentActivityS.finish();
-                        }else {
-                            parentActivityT.finish();
-                        }
-                    }
-                });
-        builder.create().show();
+
     }
 
     private void showLoadingTip(String tip){
