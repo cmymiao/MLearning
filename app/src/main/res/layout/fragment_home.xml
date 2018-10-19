@@ -16,7 +16,7 @@
         android:id="@+id/info_group_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:background="?attr/qmui_config_color_background"/>
 
     <FrameLayout
         android:layout_width="match_parent"
