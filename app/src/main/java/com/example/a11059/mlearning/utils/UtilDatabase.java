@@ -1,14 +1,14 @@
 package com.example.a11059.mlearning.utils;
 
-import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.a11059.mlearning.activity.CourseResourceInfoActivity;
 import com.example.a11059.mlearning.activity.InitialActivity;
 import com.example.a11059.mlearning.activity.LoginActivity;
 import com.example.a11059.mlearning.activity.QuestionActivity;
 import com.example.a11059.mlearning.activity.ResourceActivity;
-import com.example.a11059.mlearning.activity.StudentMainActivity;
+import com.example.a11059.mlearning.activity.StudentInfoActivity;
 import com.example.a11059.mlearning.activity.StudentStatisticActivity;
 import com.example.a11059.mlearning.entity.Class;
 import com.example.a11059.mlearning.entity.Course;
@@ -33,11 +33,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
@@ -47,7 +45,6 @@ import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
 import cn.bmob.v3.listener.QueryListener;
@@ -92,6 +89,14 @@ public class UtilDatabase {
     public static final int INITIAL_ERROR = 28;
     public static final int ALL_RESOURCE_INFO = 29;
     public static final int ERROR_RESOURCES = 30;
+    public static final int CLASSES_FIND = 31;
+    public static final int ERROR_CLASSES_LOADED = 32;
+    public static final int STUDENT_INFO = 33;
+    public static final int ERROR_STUDENT = 34;
+    public static final int COURSE_ALL_INFO = 35;
+    public static final int ERROR_ALL_COURSE_LOADED = 36;
+    public static final int COURSE_FIND = 37;
+    public static final int ERROR_COURSE = 38;
 
     public static int questionNum = 0;
 
@@ -105,6 +110,10 @@ public class UtilDatabase {
     public static List<Problem> problemList = new ArrayList<>();
     public static List<Statistic> statisticList = new ArrayList<>();
     public static List<Resource> resourceList = new ArrayList<>();
+    public static List<Class> classesList = new ArrayList<>();
+    public static List<User> studentList = new ArrayList<>();
+    public static List<Course> courseAllList = new ArrayList<>();
+    public static List<Course> courseResourceList = new ArrayList<>();
 
     public static String courseName = "";
     public static String schedule = "";
@@ -768,12 +777,78 @@ public class UtilDatabase {
         });
     }
 
-    public static void findStudentsInfo(final HomeFragment fragment){
+    public static void findClassInfo(final HomeFragment fragment){
+        BmobQuery<Class> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Class>() {
+            @Override
+            public void done(List<Class> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    classesList = list;
+                    message.what = CLASSES_FIND;
+                }else {
+                    message.what = ERROR_CLASSES_LOADED;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void findStudentInfo(final StudentInfoActivity activity, String ClassId){
+        studentList.clear();
+        //获得所在所有用户
+        BmobQuery<User> query = new BmobQuery<>();
+        query.addWhereEqualTo("classId", ClassId);
+        query.findObjects(new FindListener<User>() {
+            @Override
+            public void done(List<User> list, BmobException e) {
+                Message message = new Message();
+                if (e == null){
+                    studentList = list;
+                    message.what = STUDENT_INFO;
+                }else {
+                    message.what = ERROR_STUDENT;
+                }
+                activity.handler.sendMessage(message);
+            }
+        });
 
     }
 
-    public static void findResourceInfo(final HomeFragment fragment){
+    //教师端查询所有课程资源
+    public static void findAllCourseResourceInfo(final HomeFragment fragment){
+        BmobQuery<Course> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Course>() {
+            @Override
+            public void done(List<Course> list, BmobException e) {
+                Message message = new Message();
+                if (e == null){
+                    courseAllList = list;
+                    message.what = COURSE_ALL_INFO;
+                }else {
+                    message.what = ERROR_ALL_COURSE_LOADED;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
+    }
 
+    public static void findCourseResourceInfo(final CourseResourceInfoActivity activity, int CourseId){
+        BmobQuery<Course> query = new BmobQuery<>();
+        query.addWhereEqualTo("id",CourseId);
+        query.findObjects(new FindListener<Course>() {
+            @Override
+            public void done(List<Course> list, BmobException e) {
+                Message message = new Message();
+                if (e == null){
+                    courseResourceList = list;
+                    message.what = COURSE_FIND;
+                }else {
+                    message.what = ERROR_COURSE;
+                }
+                activity.handler.sendMessage(message);
+            }
+        });
     }
 
     public static void findQuestionInfo(final HomeFragment fragment){
