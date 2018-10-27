@@ -9,6 +9,8 @@ import com.example.a11059.mlearning.activity.LoginActivity;
 import com.example.a11059.mlearning.activity.QuestionActivity;
 import com.example.a11059.mlearning.activity.ResourceActivity;
 import com.example.a11059.mlearning.activity.StudentInfoActivity;
+import com.example.a11059.mlearning.activity.StatisticActivity;
+import com.example.a11059.mlearning.activity.StudentMainActivity;
 import com.example.a11059.mlearning.activity.StudentStatisticActivity;
 import com.example.a11059.mlearning.entity.Class;
 import com.example.a11059.mlearning.entity.Course;
@@ -25,6 +27,7 @@ import com.example.a11059.mlearning.fragment.HomeFragment;
 import com.example.a11059.mlearning.fragment.LearnFragment;
 import com.example.a11059.mlearning.fragment.MineFragment;
 import com.example.a11059.mlearning.fragment.QuizFragment;
+import com.example.a11059.mlearning.fragment.StatisticFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +40,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -97,7 +101,9 @@ public class UtilDatabase {
     public static final int ERROR_ALL_COURSE_LOADED = 36;
     public static final int COURSE_FIND = 37;
     public static final int ERROR_COURSE = 38;
-
+    public static final int STATISTIC_QUESTION = 39;
+    public static final int STATISTIC_STUDENT = 40;
+    public static final int STATISTIC_STUDENT_NUM = 41;
     public static int questionNum = 0;
 
     public static List<Class> classList = new ArrayList<>();
@@ -107,6 +113,7 @@ public class UtilDatabase {
     public static List<Examination> examList = new ArrayList<>();
     public static List<Unit> unitsList = new ArrayList<>();
     public static List<List<Knowledge>> unitKnowledgeList = new ArrayList<>();
+    public static List<List<Unit>> courseUnitList = new ArrayList<>();
     public static List<Problem> problemList = new ArrayList<>();
     public static List<Statistic> statisticList = new ArrayList<>();
     public static List<Resource> resourceList = new ArrayList<>();
@@ -868,6 +875,244 @@ public class UtilDatabase {
                     message.what = ERROR_PROBLEM;
                 }
                 fragment.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void findCourse(final StatisticFragment fragment){
+        BmobQuery<Course> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Course>() {
+            @Override
+            public void done(List<Course> list, BmobException e) {
+                Message message = new Message();
+                if (e == null) {
+                    courseList = list;
+                    findUnit(fragment);
+                } else {
+                    message.what = ERROR_UNIT_LOADED;
+                    fragment.handler.sendMessage(message);
+                }
+
+            }
+        });
+    }
+
+    public static void findUnit(final StatisticFragment fragment){
+        BmobQuery<Unit> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Unit>() {
+            @Override
+            public void done(List<Unit> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    //knowledgeList = list;
+                    courseUnitList.clear();//必须清除，否则无法正确显示
+                    for(Course course : courseList){
+                        List<Unit> moduleChapter = new ArrayList<>();
+                        for (Unit unit : list){
+                            if (course.getId().equals(unit.getCourseId())){
+                                moduleChapter.add(unit);
+                            }
+                        }
+                        courseUnitList.add(moduleChapter);
+                    }
+                    message.what = UNITS_FIND;
+                }
+                else{
+                    message.what = ERROR_UNIT_LOADED;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void findClasses(final StatisticFragment fragment){
+        BmobQuery<Class> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Class>() {
+            @Override
+            public void done(List<Class> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    classList = list;
+                    message.what = CLASS_INFO;
+                }else {
+                    message.what = ERROR;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void statisticQuestionRate(final StatisticActivity activity, int courseId, int unitId){
+        statisticList.clear();
+        BmobQuery<Question> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("courseId", courseId);
+        BmobQuery<Question> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+
+        List<BmobQuery<Question>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+
+        BmobQuery<Question> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Question>() {
+            @Override
+            public void done(List<Question> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    List<Statistic> statistics = new ArrayList<>();
+                    for (int i = 0; i < list.size(); i++){
+                        Statistic statistic = new Statistic();
+                        statistic.setQuestionId(list.get(i).getId());
+                        statistic.setTotalNum(list.get(i).getTotalNum());
+                        statistic.setQuestion(list.get(i).getQuestion());
+                        if(list.get(i).getTotalNum() == 0){
+                            statistic.setAccuracy(0);
+                        }else {
+                            statistic.setAccuracy((list.get(i).getRightNum() * 100)/list.get(i).getTotalNum());
+                        }
+
+                        statistics.add(statistic);
+                    }
+
+                    Collections.sort(statistics, new Comparator<Statistic>() {
+                        @Override
+                        public int compare(Statistic s1, Statistic s2) {
+                            return s1.getAccuracy().compareTo(s2.getAccuracy());
+                        }
+                    });
+
+                    if(statistics.size() <= 30){
+                        statisticList = statistics;
+                    }else {
+                        for (int i = 0; i < 15; i++){
+                            statisticList.add(statistics.get(i));
+                        }
+                        for (int i = statistics.size()-1; i > statistics.size()-16; i--){
+                            statisticList.add(statistics.get(i));
+                        }
+                    }
+
+                    message.what = STATISTIC_QUESTION;
+                }else {
+                    message.what = ERROR;
+                }
+                activity.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void statisticStudentRate(final StatisticActivity activity, String classId, int courseId, int unitId){
+        statisticList.clear();
+        BmobQuery<Feedback> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("classId", classId);
+        BmobQuery<Feedback> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+
+        List<BmobQuery<Feedback>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+
+        BmobQuery<Feedback> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Feedback>() {
+            @Override
+            public void done(List<Feedback> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    List<Statistic> statistics = new ArrayList<>();
+                    for (int i = 0; i < list.size(); i++){
+                        Statistic statistic = new Statistic();
+                        statistic.setUsername(list.get(i).getUsername());
+                        statistic.setName(list.get(i).getNickname());
+                        statistic.setTotalNum(list.get(i).getTotalNum());
+                        if(list.get(i).getTotalNum() == 0){
+                            statistic.setAccuracy(0);
+                        }else {
+                            statistic.setAccuracy((list.get(i).getRightNum() * 100)/list.get(i).getTotalNum());
+                        }
+
+                        statistics.add(statistic);
+                    }
+
+                    Collections.sort(statistics, new Comparator<Statistic>() {
+                        @Override
+                        public int compare(Statistic s1, Statistic s2) {
+                            return s1.getAccuracy().compareTo(s2.getAccuracy());
+                        }
+                    });
+
+                    if(statistics.size() <= 10){
+                        statisticList = statistics;
+                    }else {
+                        for (int i = 0; i < 5; i++){
+                            statisticList.add(statistics.get(i));
+                        }
+                        for (int i = statistics.size()-1; i > statistics.size()-6; i--){
+                            statisticList.add(statistics.get(i));
+                        }
+                    }
+
+                    message.what = STATISTIC_STUDENT;
+                }else {
+                    message.what = ERROR;
+                }
+                activity.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void statisticStudentNum(final StatisticActivity activity, String classId, int courseId, int unitId){
+        statisticList.clear();
+        BmobQuery<Feedback> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("classId", classId);
+        BmobQuery<Feedback> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+
+        List<BmobQuery<Feedback>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+
+        BmobQuery<Feedback> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Feedback>() {
+            @Override
+            public void done(List<Feedback> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    List<Statistic> statistics = new ArrayList<>();
+                    for (int i = 0; i < list.size(); i++){
+                        Statistic statistic = new Statistic();
+                        statistic.setUsername(list.get(i).getUsername());
+                        statistic.setName(list.get(i).getNickname());
+                        statistic.setTotalNum(list.get(i).getTotalNum());
+
+                        statistics.add(statistic);
+                    }
+
+                    Collections.sort(statistics, new Comparator<Statistic>() {
+                        @Override
+                        public int compare(Statistic s1, Statistic s2) {
+                            return s1.getTotalNum().compareTo(s2.getTotalNum());
+                        }
+                    });
+
+                    if(statistics.size() <= 10){
+                        statisticList = statistics;
+                    }else {
+                        for (int i = 0; i < 5; i++){
+                            statisticList.add(statistics.get(i));
+                        }
+                        for (int i = statistics.size()-1; i > statistics.size()-6; i--){
+                            statisticList.add(statistics.get(i));
+                        }
+                    }
+
+                    message.what = STATISTIC_STUDENT_NUM;
+                }else {
+                    message.what = ERROR;
+                }
+                activity.handler.sendMessage(message);
             }
         });
     }

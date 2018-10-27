@@ -12,7 +12,7 @@ android {
         useLibrary 'org.apache.http.legacy'
         multiDexEnabled true
 
-        ndk{
+        ndk {
             abiFilters "armeabi-v7a"
             abiFilters "x86"
         }
@@ -46,4 +46,3 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':vitamio')
 }
-

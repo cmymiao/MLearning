@@ -1,12 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="?attr/app_primary_color">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="统计页面"/>
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/statis_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qmui_config_color_white">
+
+        <com.qmuiteam.qmui.layout.QMUILinearLayout
+            android:id="@+id/statis_entry_one"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:qmui_outerNormalColor="?attr/qmui_config_color_background"
+            app:qmui_borderColor="?attr/qmui_config_color_separator"
+            app:qmui_showBorderOnlyBeforeL="true"
+            android:padding="20dp">
+
+            <com.example.a11059.mlearning.widget.SquareImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_statis_one"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="单元题目答题情况统计"
+                    android:textSize="16sp"
+                    android:textColor="@color/grayText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="统计每单元错误率最高与最低的15道题目"
+                    android:textColor="@color/app_color_description"/>
+
+            </LinearLayout>
+
+        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+
+        <com.qmuiteam.qmui.layout.QMUILinearLayout
+            android:id="@+id/statis_entry_two"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:qmui_outerNormalColor="?attr/qmui_config_color_background"
+            app:qmui_borderColor="?attr/qmui_config_color_separator"
+            app:qmui_showBorderOnlyBeforeL="true"
+            android:padding="20dp">
+
+            <com.example.a11059.mlearning.widget.SquareImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_statis_two"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学生答题情况统计"
+                    android:textSize="16sp"
+                    android:textColor="@color/grayText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="统计每单元每班错误率最高与最低的5名学生"
+                    android:textColor="@color/app_color_description"/>
+
+            </LinearLayout>
+
+        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+
+        <com.qmuiteam.qmui.layout.QMUILinearLayout
+            android:id="@+id/statis_entry_three"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:qmui_outerNormalColor="?attr/qmui_config_color_background"
+            app:qmui_borderColor="?attr/qmui_config_color_separator"
+            app:qmui_showBorderOnlyBeforeL="true"
+            android:padding="20dp">
+
+            <com.example.a11059.mlearning.widget.SquareImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_statis_three"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学生答题数量统计"
+                    android:textSize="16sp"
+                    android:textColor="@color/grayText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="统计每单元每班答题数量最多与最少的5名学生"
+                    android:textColor="@color/app_color_description"/>
+
+            </LinearLayout>
+
+        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

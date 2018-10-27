@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="-1px">
+
+    <View
+        android:id="@+id/q_header_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#cccccc"/>
+
+    <LinearLayout
+        android:id="@+id/q_header"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1px"
+        android:layout_marginBottom="1px">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="middle"
+            android:text="编号"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#cccccc"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="middle"
+            android:text="答题人数"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#cccccc"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="middle"
+            android:text="正确率"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#cccccc"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="题目详情"/>
+
+    </LinearLayout>
+
+</LinearLayout>

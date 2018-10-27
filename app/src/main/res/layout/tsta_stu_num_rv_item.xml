@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="-1px">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#cccccc"/>
+
+    <LinearLayout
+        android:id="@+id/nfs_view"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1px"
+        android:layout_marginBottom="1px"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
+
+        <TextView
+            android:id="@+id/nfs_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:text="222"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#cccccc"/>
+
+        <TextView
+            android:id="@+id/nfs_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:text="201424020503"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#cccccc"/>
+
+        <TextView
+            android:id="@+id/nfs_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="middle"
+            android:text="二喵二喵22"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="#cccccc"/>
+
+        <TextView
+            android:id="@+id/nfs_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/grayText"
+            android:singleLine="true"
+            android:ellipsize="middle"
+            android:text="二喵二喵22"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#cccccc"/>
+
+</LinearLayout>
