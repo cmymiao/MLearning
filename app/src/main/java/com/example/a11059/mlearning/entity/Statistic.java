@@ -9,7 +9,10 @@ public class Statistic {
     private String username;
     private int unitId;
     private String nickname;
-    private int totalNum;
+    private String name;
+    private int questionId;
+    private String question;
+    private Integer totalNum;
     private int rightNum;
     private Integer accuracy;
 
@@ -37,11 +40,35 @@ public class Statistic {
         this.nickname = nickname;
     }
 
-    public int getTotalNum() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public Integer getTotalNum() {
         return totalNum;
     }
 
-    public void setTotalNum(int totalNum) {
+    public void setTotalNum(Integer totalNum) {
         this.totalNum = totalNum;
     }
 
@@ -57,7 +84,7 @@ public class Statistic {
         return accuracy;
     }
 
-    public void setAccuracy(int accuracy) {
+    public void setAccuracy(Integer accuracy) {
         this.accuracy = accuracy;
     }
 }

@@ -42,7 +42,7 @@
         <activity
             android:name=".activity.TeacherMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.InitialActivity"
             android:screenOrientation="portrait"
@@ -52,13 +52,14 @@
         <activity android:name=".activity.ResourceActivity" />
         <activity android:name=".activity.StudentStatisticActivity" />
         <activity android:name=".activity.PdfViewActivity" />
-        <activity android:name=".activity.VideoActivity"></activity>
+        <activity android:name=".activity.VideoActivity" />
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.StatisticActivity"></activity>
     </application>
 
 </manifest>

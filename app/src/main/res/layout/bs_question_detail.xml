@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="题目详情"
+        android:textSize="17sp"
+        android:textColor="@color/grayText"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <LinearLayout
+            android:id="@+id/question_view"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1px"
+            android:layout_marginBottom="1px"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/question_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                android:textColor="@color/grayText"
+                android:singleLine="true"
+                android:ellipsize="middle"
+                android:text="题号：12"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#cccccc"/>
+
+            <TextView
+                android:id="@+id/question_t_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                android:textColor="@color/grayText"
+                android:singleLine="true"
+                android:ellipsize="middle"
+                android:text="答题人数：230"/>
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#cccccc"/>
+
+            <TextView
+                android:id="@+id/question_e_rate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:textSize="15sp"
+                android:textColor="@color/grayText"
+                android:singleLine="true"
+                android:ellipsize="middle"
+                android:text="错误率：45%"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/question_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="内容"
+                android:textSize="15sp"/>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
