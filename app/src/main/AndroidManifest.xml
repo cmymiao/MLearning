@@ -54,14 +54,15 @@
         <activity android:name=".activity.PdfViewActivity" />
         <activity android:name=".activity.VideoActivity"/>
         <activity android:name=".activity.StudentInfoActivity"/>
-        <activity android:name=".activity.CourseResourceInfoActivity"/>
+        <activity android:name=".activity.TeacherResourceActivity"/>
+        <activity android:name=".activity.StatisticActivity"/>
+        <activity android:name=".activity.TeacherAllTestQuestionInfoActivity"/>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activity.StatisticActivity"></activity>
     </application>
 
 </manifest>

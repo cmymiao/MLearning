@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a11059.mlearning.R;
 import com.example.a11059.mlearning.activity.StudentInfoActivity;
 import com.example.a11059.mlearning.entity.User;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.util.List;
 
@@ -28,7 +28,6 @@ public class StudentInfoRvAdapter extends RecyclerView.Adapter<StudentInfoRvAdap
 
     private List<User> mStudentList;
 
-    private QMUITipDialog tipDialog;
 
     public StudentInfoRvAdapter(List<User> studentList){
         mStudentList = studentList;
@@ -38,8 +37,7 @@ public class StudentInfoRvAdapter extends RecyclerView.Adapter<StudentInfoRvAdap
         TextView studentId;
         TextView studentName;
         TextView studentNickname;
-        TextView studnetMobilephone;
-//        TextView studnetEmail;
+        ImageView studentDetail;
 
 
         public ViewHolder(View view, int viewType){
@@ -50,7 +48,7 @@ public class StudentInfoRvAdapter extends RecyclerView.Adapter<StudentInfoRvAdap
             studentId = (TextView) view.findViewById(R.id.student_id);
             studentName = (TextView) view.findViewById(R.id.studnet_name);
             studentNickname = (TextView) view.findViewById(R.id.student_nickname);
-            studnetMobilephone = (TextView) view.findViewById(R.id.student_mobile_phone);
+            studentDetail = (ImageView) view.findViewById(R.id.show_detail_information);
 
         }
     }
@@ -76,18 +74,32 @@ public class StudentInfoRvAdapter extends RecyclerView.Adapter<StudentInfoRvAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         if(getItemViewType(position) == VIEW_TYPE_HEADER){ //如果是header则无需绑定数据
             return;
         }
-        //获得。。。。
+        //绑定数据
         final int lPosition = holder.getLayoutPosition();
         holder.studentId.setText(mStudentList.get(lPosition-1).getUsername());
         holder.studentName.setText(mStudentList.get(lPosition-1).getName());
         holder.studentNickname.setText(mStudentList.get(lPosition-1).getNickname());
-        holder.studnetMobilephone.setText(mStudentList.get(lPosition-1).getMobilePhoneNumber());
+        holder.studentDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(OnShowSDetailClickListener != null){
+                    OnShowSDetailClickListener.onClick(position - 1);
+                }
+            }
+        });
     }
+    public interface OnShowSDetailClickListener {
+        void onClick(int position);
+    }
+    private OnShowSDetailClickListener OnShowSDetailClickListener;
 
+    public void setOnItemClickListener(StudentInfoRvAdapter.OnShowSDetailClickListener OnShowSDetailClickListener){
+        this.OnShowSDetailClickListener = OnShowSDetailClickListener;
+    }
     @Override
     public int getItemViewType(int position) {
         if(position == 0){

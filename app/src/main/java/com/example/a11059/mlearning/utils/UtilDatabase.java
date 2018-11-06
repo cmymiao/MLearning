@@ -3,15 +3,15 @@ package com.example.a11059.mlearning.utils;
 import android.os.Message;
 import android.util.Log;
 
-import com.example.a11059.mlearning.activity.CourseResourceInfoActivity;
 import com.example.a11059.mlearning.activity.InitialActivity;
 import com.example.a11059.mlearning.activity.LoginActivity;
 import com.example.a11059.mlearning.activity.QuestionActivity;
 import com.example.a11059.mlearning.activity.ResourceActivity;
-import com.example.a11059.mlearning.activity.StudentInfoActivity;
 import com.example.a11059.mlearning.activity.StatisticActivity;
-import com.example.a11059.mlearning.activity.StudentMainActivity;
+import com.example.a11059.mlearning.activity.StudentInfoActivity;
 import com.example.a11059.mlearning.activity.StudentStatisticActivity;
+import com.example.a11059.mlearning.activity.TeacherAllTestQuestionInfoActivity;
+import com.example.a11059.mlearning.activity.TeacherResourceActivity;
 import com.example.a11059.mlearning.entity.Class;
 import com.example.a11059.mlearning.entity.Course;
 import com.example.a11059.mlearning.entity.Examination;
@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -99,11 +98,15 @@ public class UtilDatabase {
     public static final int ERROR_STUDENT = 34;
     public static final int COURSE_ALL_INFO = 35;
     public static final int ERROR_ALL_COURSE_LOADED = 36;
-    public static final int COURSE_FIND = 37;
-    public static final int ERROR_COURSE = 38;
-    public static final int STATISTIC_QUESTION = 39;
-    public static final int STATISTIC_STUDENT = 40;
-    public static final int STATISTIC_STUDENT_NUM = 41;
+    public static final int ERROR_COURSE = 37;
+    public static final int STATISTIC_QUESTION = 38;
+    public static final int STATISTIC_STUDENT = 39;
+    public static final int STATISTIC_STUDENT_NUM = 40;
+    public static final int ALL_RESOURCE_TEACHER_INFO = 41;
+    public static final int QUESTION_FIND = 42;
+    public static final int ERROR_QUESTION = 43;
+
+
     public static int questionNum = 0;
 
     public static List<Class> classList = new ArrayList<>();
@@ -120,7 +123,10 @@ public class UtilDatabase {
     public static List<Class> classesList = new ArrayList<>();
     public static List<User> studentList = new ArrayList<>();
     public static List<Course> courseAllList = new ArrayList<>();
-    public static List<Course> courseResourceList = new ArrayList<>();
+    public static List<Resource> resourceTeacherList = new ArrayList<>();
+    public static List<Question> questionUnitList = new ArrayList<>();
+
+
 
     public static String courseName = "";
     public static String schedule = "";
@@ -801,11 +807,11 @@ public class UtilDatabase {
         });
     }
 
-    public static void findStudentInfo(final StudentInfoActivity activity, String ClassId){
+    public static void findStudentInfo(final StudentInfoActivity activity, String classId){
         studentList.clear();
         //获得所在所有用户
         BmobQuery<User> query = new BmobQuery<>();
-        query.addWhereEqualTo("classId", ClassId);
+        query.addWhereEqualTo("classId", classId);
         query.findObjects(new FindListener<User>() {
             @Override
             public void done(List<User> list, BmobException e) {
@@ -821,44 +827,115 @@ public class UtilDatabase {
         });
 
     }
-
     //教师端查询所有课程资源
-    public static void findAllCourseResourceInfo(final HomeFragment fragment){
+    public static void findAllCourse(final HomeFragment fragment){
         BmobQuery<Course> query = new BmobQuery<>();
         query.findObjects(new FindListener<Course>() {
             @Override
             public void done(List<Course> list, BmobException e) {
                 Message message = new Message();
-                if (e == null){
-                    courseAllList = list;
+                if (e == null) {
                     message.what = COURSE_ALL_INFO;
-                }else {
+                    courseAllList = list;
+                } else {
                     message.what = ERROR_ALL_COURSE_LOADED;
+
                 }
                 fragment.handler.sendMessage(message);
             }
         });
     }
 
-    public static void findCourseResourceInfo(final CourseResourceInfoActivity activity, int CourseId){
-        BmobQuery<Course> query = new BmobQuery<>();
-        query.addWhereEqualTo("id",CourseId);
-        query.findObjects(new FindListener<Course>() {
+    public static void findAllTeacherResources(final TeacherResourceActivity activity, int unitId, int knowledgeId, int courseId) {
+        BmobQuery<Resource> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("courseId", courseId);
+        BmobQuery<Resource> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+        BmobQuery<Resource> q3 = new BmobQuery<>();
+        q3.addWhereEqualTo("knowledgeId", knowledgeId);
+
+        List<BmobQuery<Resource>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+        queryList.add(q3);
+
+        BmobQuery<Resource> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Resource>() {
             @Override
-            public void done(List<Course> list, BmobException e) {
+            public void done(List<Resource> list, BmobException e) {
                 Message message = new Message();
-                if (e == null){
-                    courseResourceList = list;
-                    message.what = COURSE_FIND;
+                if(e == null){
+                    resourceTeacherList = list;
+                    message.what = ALL_RESOURCE_TEACHER_INFO;
                 }else {
-                    message.what = ERROR_COURSE;
+                    message.what = ERROR_RESOURCES;
                 }
                 activity.handler.sendMessage(message);
             }
         });
     }
 
-    public static void findQuestionInfo(final HomeFragment fragment){
+    public static void findTeacherResourceByType(final TeacherResourceActivity activity, int unitId, int knowledgeId, String type, int courseId){
+        BmobQuery<Resource> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("courseId", courseId);
+        BmobQuery<Resource> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+        BmobQuery<Resource> q3 = new BmobQuery<>();
+        q3.addWhereEqualTo("knowledgeId", knowledgeId);
+        BmobQuery<Resource> q4 = new BmobQuery<>();
+        q4.addWhereEqualTo("type", type);
+
+        List<BmobQuery<Resource>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+        queryList.add(q3);
+        queryList.add(q4);
+
+        BmobQuery<Resource> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Resource>() {
+            @Override
+            public void done(List<Resource> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    resourceTeacherList = list;
+                    message.what = ALL_RESOURCE_TEACHER_INFO;
+                }else {
+                    message.what = ERROR_RESOURCES;
+                }
+                activity.handler.sendMessage(message);
+            }
+        });
+    }
+    public static void findQuestionInfo(final TeacherAllTestQuestionInfoActivity activity, int courseId, int unitId){
+        questionUnitList.clear();
+        BmobQuery<Question> q1 = new BmobQuery<>();
+        q1.addWhereEqualTo("courseId", courseId);
+        BmobQuery<Question> q2 = new BmobQuery<>();
+        q2.addWhereEqualTo("unitId", unitId);
+
+        List<BmobQuery<Question>> queryList = new ArrayList<>();
+        queryList.add(q1);
+        queryList.add(q2);
+
+        BmobQuery<Question> query = new BmobQuery<>();
+        query.and(queryList);
+        query.findObjects(new FindListener<Question>() {
+            @Override
+            public void done(List<Question> list, BmobException e) {
+                Message message = new Message();
+                if (e == null){
+                    questionUnitList = list;
+                    message.what = QUESTION_FIND;
+                }else {
+                    message.what = ERROR_QUESTION;
+                }
+                activity.handler.sendMessage(message);
+            }
+
+        });
+
 
     }
 
@@ -879,6 +956,99 @@ public class UtilDatabase {
         });
     }
 
+    public static void findCourse(final HomeFragment fragment){
+        BmobQuery<Course> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Course>() {
+            @Override
+            public void done(List<Course> list, BmobException e) {
+                Message message = new Message();
+                if (e == null) {
+                    courseList = list;
+                    findUnit(fragment);
+                } else {
+                    message.what = ERROR_COURSE;
+                    fragment.handler.sendMessage(message);
+                }
+            }
+        });
+    }
+
+    public static void findUnit(final HomeFragment fragment){
+        BmobQuery<Unit> query = new BmobQuery<>();
+        query.findObjects(new FindListener<Unit>() {
+            @Override
+            public void done(List<Unit> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                    //knowledgeList = list;
+                    courseUnitList.clear();//必须清除，否则无法正确显示
+                    for(Course course : courseList){
+                        List<Unit> moduleChapter = new ArrayList<>();
+                        for (Unit unit : list){
+                            if (course.getId().equals(unit.getCourseId())){
+                                moduleChapter.add(unit);
+                            }
+                        }
+                        courseUnitList.add(moduleChapter);
+                    }
+                    message.what = UNIT_INFO;
+                }
+                else{
+                    message.what = ERROR_COURSE;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
+    }
+
+    public static void findUnits(final HomeFragment fragment, final int CourseId){
+        BmobQuery<Unit> query = new BmobQuery<>();
+        query.addWhereEqualTo("courseId", CourseId);
+        query.findObjects(new FindListener<Unit>() {
+            @Override
+            public void done(List<Unit> list, BmobException e) {
+                Message message = new Message();
+                if (e == null) {
+                    unitsList = list;
+                    findKnowledge(fragment,CourseId);
+                } else {
+                    message.what = ERROR_UNIT_LOADED;
+                    fragment.handler.sendMessage(message);
+                }
+
+            }
+        });
+    }
+
+
+    public static void findKnowledge(final HomeFragment fragment, int CourseId){
+        BmobQuery<Knowledge> query = new BmobQuery<>();
+        query.addWhereEqualTo("courseId", CourseId);
+        query.findObjects(new FindListener<Knowledge>() {
+            @Override
+            public void done(List<Knowledge> list, BmobException e) {
+                Message message = new Message();
+                if(e == null){
+                        //knowledgeList = list;
+                        unitKnowledgeList.clear();//必须清除，否则无法正确显示
+                        for(Unit unit : unitsList){
+                            List<Knowledge> moduleChapter = new ArrayList<>();
+                            for (Knowledge knowledge : list){
+                                if (unit.getId().equals(knowledge.getUnitId())){
+                                    moduleChapter.add(knowledge);
+                                }
+                            }
+                            unitKnowledgeList.add(moduleChapter);
+                        }
+                    message.what = UNITS_FIND;
+                }
+                else{
+                    message.what = ERROR_UNIT_LOADED;
+                }
+                fragment.handler.sendMessage(message);
+            }
+        });
+    }
     public static void findCourse(final StatisticFragment fragment){
         BmobQuery<Course> query = new BmobQuery<>();
         query.findObjects(new FindListener<Course>() {

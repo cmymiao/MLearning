@@ -81,7 +81,7 @@
             android:textColor="@color/grayText"
             android:singleLine="true"
             android:ellipsize="middle"
-            android:text="电话"/>
+            android:text="信息详情"/>
 
 
     </LinearLayout>

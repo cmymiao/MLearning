@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/course_topbar"
+        android:id="@+id/resource_topbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"/>
 
@@ -19,9 +19,9 @@
         android:background="@color/qmui_config_color_background">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/course_recyclerview"
+            android:id="@+id/resource_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/emptyView"

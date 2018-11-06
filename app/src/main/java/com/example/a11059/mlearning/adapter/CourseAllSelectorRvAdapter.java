@@ -1,5 +1,4 @@
 package com.example.a11059.mlearning.adapter;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -27,13 +26,11 @@ public class CourseAllSelectorRvAdapter extends RecyclerView.Adapter<CourseAllSe
     static class ViewHolder extends RecyclerView.ViewHolder{
 
         LinearLayout courseView;
-        //        TextView classNum;
         TextView courseName;
 
         public ViewHolder(View view){
             super(view);
             courseView = (LinearLayout) view.findViewById(R.id.course_view);
-//            classNum = (TextView) view.findViewById(R.id.class_num);
             courseName = (TextView) view.findViewById(R.id.course_name);
         }
 
@@ -51,8 +48,7 @@ public class CourseAllSelectorRvAdapter extends RecyclerView.Adapter<CourseAllSe
     @Override
     public void onBindViewHolder(@NonNull CourseAllSelectorRvAdapter.ViewHolder holder, final int position) {
         Course course = courses.get(position);
-//        holder.classNum.setText("第"+(position+1)+"单元");
-        holder.courseName.setText(course.getName());
+        holder.courseName.setText("课程名：" + course.getName());
         holder.courseView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

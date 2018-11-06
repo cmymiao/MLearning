@@ -29,7 +29,7 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
     private static String currentUrl;
     private static String currentTitle;
 
-    private String path="http://bmob-cdn-20815.b0.upaiyun.com/2018/08/18/6e8f50d34079927080a386ec818af0db.mp4";
+
     private Uri uri;
     private VideoView mVideoView;
     private ProgressBar pb;
@@ -57,7 +57,7 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
 
         downloadRateView = (TextView) findViewById(R.id.download_rate);
         loadRateView = (TextView) findViewById(R.id.load_rate);
-        if (path == "") {
+        if (currentUrl == "") {
             // Tell the user to provide a media file URL/path.
             UtilUI.shortToast("视频不存在请尝试重新进去");
             return;
@@ -66,11 +66,11 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
              * Alternatively,for streaming media you can use
              * mVideoView.setVideoURI(Uri.parse(URLstring));
              */
-            uri = Uri.parse(path);
+            uri = Uri.parse(currentUrl);
             mVideoView.setVideoURI(uri);
 //      mVideoView.setMediaController(new MediaController(this));
             mCustomMediaController = new CustomMediaController(this,mVideoView,this);
-            mCustomMediaController.setVideoName("音乐播放器服务");
+            mCustomMediaController.setVideoName(currentTitle);
 
             mCustomMediaController.show(5000); //5s隐藏
             mVideoView.setMediaController(mCustomMediaController);

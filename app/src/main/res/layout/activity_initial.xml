@@ -84,7 +84,6 @@
                 android:background="@drawable/login_edittext_selector"
                 android:textCursorDrawable="@null"
                 android:inputType="textPassword"
-                android:digits="@string/digitsSet"
                 android:hint="请输入您的密码"
                 android:textSize="15sp"/>
 
