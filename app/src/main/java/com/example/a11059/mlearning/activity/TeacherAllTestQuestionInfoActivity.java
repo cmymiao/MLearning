@@ -18,6 +18,7 @@ import com.example.a11059.mlearning.R;
 import com.example.a11059.mlearning.adapter.TeacherAllTestQuestionInfoRvAdapter;
 import com.example.a11059.mlearning.entity.Course;
 import com.example.a11059.mlearning.entity.Question;
+import com.example.a11059.mlearning.entity.Unit;
 import com.example.a11059.mlearning.utils.UtilDatabase;
 import com.example.a11059.mlearning.utils.UtilNetwork;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -31,8 +32,13 @@ import java.util.List;
 
 public class TeacherAllTestQuestionInfoActivity extends AppCompatActivity implements View.OnClickListener{
     private static int currentCourseid;
+
     private static int currentUnitId;
-    private static String currentUnitName;
+
+    private static int currentCourseIndex;
+
+    private static int  currentUnitIndex;
+
     private static final int TIP_TYPE_SUCCESS = 1;
 
     private static final int TIP_TYPE_FAIL = 0;
@@ -91,11 +97,12 @@ public class TeacherAllTestQuestionInfoActivity extends AppCompatActivity implem
         }
     }
 
-    public static void actionStart(Context context,String unitName, int courseId, int unitId){
+    public static void actionStart(Context context,int courseIndex,int unitIndex, int courseId, int unitId){
         Intent intent = new Intent(context, TeacherAllTestQuestionInfoActivity.class);
         currentCourseid = courseId;
         currentUnitId = unitId;
-        currentUnitName = unitName;
+        currentCourseIndex = courseIndex;
+        currentUnitIndex = unitIndex;
         context.startActivity(intent);
     }
 
@@ -134,7 +141,15 @@ public class TeacherAllTestQuestionInfoActivity extends AppCompatActivity implem
     }
 
     private String getTopBarSubTitle(int unitId){
-        String subTitle = currentUnitName;
+        String subTitle = "";
+
+        for (Unit unit : UtilDatabase.courseUnitList.get(currentCourseIndex)){
+            if (unit.getId() != null){
+                if (unit.getId().equals(unitId)){
+                    subTitle = unit.getName();
+                }
+            }
+        }
 
         return subTitle;
     }
@@ -170,6 +185,7 @@ public class TeacherAllTestQuestionInfoActivity extends AppCompatActivity implem
         switch (v.getId()){
             case R.id.qmui_topbar_item_left_back:
                 finish();
+                break;
             case R.id.btn_prev:
                 btnPrevClickAction();
                 break;
@@ -221,7 +237,7 @@ public class TeacherAllTestQuestionInfoActivity extends AppCompatActivity implem
             showTip(TIP_TYPE_INFO, "加载中，请稍候", DEFAULT_TIP_DURATION);
             return;
         }
-        if(currentUnitId == UtilDatabase.unitsList.size()){
+        if(currentUnitId == UtilDatabase.courseUnitList.get(currentCourseIndex).size()){
             showTip(TIP_TYPE_INFO, "没有下一单元了", DEFAULT_TIP_DURATION);
             return;
         } else {

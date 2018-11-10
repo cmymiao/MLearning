@@ -9,6 +9,7 @@ import cn.bmob.v3.BmobObject;
 public class Problem extends BmobObject {
     private Integer id;
     private String studentId;
+    private String studentName;
     private String problem;
     private String reply;
 
@@ -42,5 +43,13 @@ public class Problem extends BmobObject {
 
     public void setReply(String reply) {
         this.reply = reply;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 }

@@ -9,15 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.a11059.mlearning.R;
-import com.example.a11059.mlearning.activity.StudentMainActivity;
 import com.example.a11059.mlearning.entity.Problem;
 import com.example.a11059.mlearning.entity.User;
 import com.example.a11059.mlearning.fragment.QuizFragment;
-import com.like.LikeButton;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
@@ -70,14 +65,16 @@ public class QuizRvAdapter extends RecyclerView.Adapter<QuizRvAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final int lPosition = holder.getLayoutPosition();
-        holder.quizContent.setText((lPosition + 1) + ". " + mProblemList.get(lPosition).getProblem());
+        String quizContent = (lPosition + 1) + ". " + mProblemList.get(lPosition).getProblem();
+        String replyContent = "回复：" + mProblemList.get(lPosition).getReply();
+        holder.quizContent.setText(quizContent);
         holder.createdAt.setText(mProblemList.get(lPosition).getCreatedAt());
         if(mProblemList.get(lPosition).getReply() == null){
             holder.quizReply.setText("暂未回复");
             holder.replyTime.setVisibility(View.GONE);
         }else {
             holder.replyTime.setVisibility(View.VISIBLE);
-            holder.quizReply.setText(mProblemList.get(lPosition).getReply());
+            holder.quizReply.setText(replyContent);
             holder.replyTime.setText(mProblemList.get(lPosition).getUpdatedAt());
         }
     }

@@ -105,6 +105,8 @@ public class UtilDatabase {
     public static final int ALL_RESOURCE_TEACHER_INFO = 41;
     public static final int QUESTION_FIND = 42;
     public static final int ERROR_QUESTION = 43;
+    public static final int ADD_REPLY_SUCCESS = 44;
+    public static final int ADD_REPLY_FAIL = 45;
 
 
     public static int questionNum = 0;
@@ -602,6 +604,7 @@ public class UtilDatabase {
     public static void addProblem(final QuizFragment fragment, final String p){
         User user = BmobUser.getCurrentUser(User.class);
         final String studentId = user.getUsername();
+        final String studentName = user.getName();
         BmobQuery<Problem> query = new BmobQuery<>();
         query.addWhereEqualTo("studentId", studentId);
         query.count(Problem.class, new CountListener() {
@@ -611,6 +614,7 @@ public class UtilDatabase {
                     int id = integer + 1;
                     Problem problem = new Problem();
                     problem.setStudentId(studentId);
+                    problem.setStudentName(studentName);
                     problem.setId(id);
                     problem.setProblem(p);
                     problem.save(new SaveListener<String>() {
@@ -952,6 +956,38 @@ public class UtilDatabase {
                     message.what = ERROR_PROBLEM;
                 }
                 fragment.handler.sendMessage(message);
+            }
+        });
+    }
+    public static void addReply(final HomeFragment fragment, final String problem, final String p){
+        BmobQuery<Problem> query = new BmobQuery<>();
+        query.addWhereEqualTo("problem", problem);
+        query.findObjects(new FindListener<Problem>() {
+            @Override
+            public void done(List<Problem> list, BmobException e) {
+                if (e==null){
+                    /**
+                     * 通过字段值problem查询Problem表中相应的数据，然后再用list.get(0).objectId()获得id
+                     * 再通过id更新replay数据
+                     */
+                    final String objectId = list.get(0).getObjectId();
+                    Problem problem = new Problem();
+                    problem.setReply(p);
+                    problem.update(objectId, new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            Message message = new Message();
+                            if (e == null){
+                                message.what = ADD_REPLY_SUCCESS;
+                            }else {
+                                message.what = ADD_REPLY_FAIL;
+                            }
+                            fragment.handler.sendMessage(message);
+                        }
+                    });
+                }else {
+
+                }
             }
         });
     }
