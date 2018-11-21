@@ -59,7 +59,7 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
         loadRateView = (TextView) findViewById(R.id.load_rate);
         if (currentUrl == "") {
             // Tell the user to provide a media file URL/path.
-            UtilUI.shortToast("视频不存在请尝试重新进去");
+            UtilUI.shortToast("视频不存在请重试");
             return;
         } else {
             /*
@@ -89,7 +89,6 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
         }
 
     }
-
     @Override
     public boolean onInfo(MediaPlayer mp, int what, int extra) {
         switch (what) {

@@ -149,15 +149,16 @@ public class Unit_KnowledgeRvAdapter extends ExpandableAdapter<Unit_KnowledgeRvA
 
     @Override
     protected int getGroupCount() {
+
         return mGroups == null ? 0 : mGroups.size();
     }
 
     @Override
     protected int getChildCount(int groupIndex) {
-        if(mChildss == null){
+        if(mChildss == null || mChildss.isEmpty()){
             return 0;
         } else {
-            return mChildss.get(groupIndex) == null ? 0 : mChildss.get(groupIndex).size();
+            return  mChildss.get(groupIndex).size();
         }
     }
 

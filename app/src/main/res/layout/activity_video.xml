@@ -23,6 +23,11 @@
         android:layout_centerInParent="true"
         android:orientation="horizontal" >
 
+        <com.qmuiteam.qmui.widget.QMUIProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"/>
+
         <ProgressBar
             android:id="@+id/probar"
             style="?android:attr/progressBarStyleLarge"

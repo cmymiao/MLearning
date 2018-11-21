@@ -111,7 +111,7 @@ public class TeacherResourceActivity extends AppCompatActivity implements View.O
         topBar.setTitle(getTopBarTitle());
         topBar.setSubTitle(getTopBarSubTitle());
         topBar.addLeftBackImageButton().setOnClickListener(this);
-        topBar.addRightTextButton("筛选", R.drawable.submit_exam).setOnClickListener(this);
+        topBar.addRightTextButton("筛选", R.drawable.filtrate_resource).setOnClickListener(this);
     }
 
     private String getTopBarTitle(){
@@ -162,7 +162,8 @@ public class TeacherResourceActivity extends AppCompatActivity implements View.O
         switch (v.getId()){
             case R.id.qmui_topbar_item_left_back:
                 finish();
-            case R.drawable.submit_exam:
+                break;
+            case R.drawable.filtrate_resource:
                 showResourceTypes();
                 break;
         }

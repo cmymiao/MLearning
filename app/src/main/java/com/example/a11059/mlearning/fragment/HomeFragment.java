@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     break;
                 case UtilDatabase.UNITS_FIND:
                     fragment.unitsList = UtilDatabase.unitsList;
-                    if (UtilDatabase.unitsList.size() == 0){
+                    if (fragment.unitsList.size() == 0){
                         fragment.showAllUnitsdFail();
                         return;
                     }
@@ -166,6 +166,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     break;
                 case UtilDatabase.ERROR_UNIT_LOADED:
                     fragment.showAllUnitsdFail();
+                    break;
                 case UtilDatabase.UNIT_INFO:
                     if (UtilDatabase.courseUnitList.size() == 0){
                         fragment.showUnitLoadedFail();
@@ -185,6 +186,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 case UtilDatabase.ADD_REPLY_FAIL:
                     fragment.tipDialog.dismiss();
                     fragment.showTip(TIP_TYPE_FAIL, "提交失败", DEFAULT_TIP_DURATION);
+                    break;
             }
         }
     }
