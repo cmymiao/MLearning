@@ -2,15 +2,12 @@ package com.example.a11059.mlearning.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.view.View;
 
 import com.example.a11059.mlearning.R;
@@ -28,8 +25,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.a11059.mlearning.activity.QuestionActivity.currentTrainMode;
 
 public class ResourceActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -114,7 +109,7 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         topBar.setTitle(getTopBarTitle());
         topBar.setSubTitle(getTopBarSubTitle());
         topBar.addLeftBackImageButton().setOnClickListener(this);
-        topBar.addRightTextButton("筛选", R.drawable.submit_exam).setOnClickListener(this);
+        topBar.addRightTextButton("筛选", R.drawable.filtrate_resource).setOnClickListener(this);
     }
 
     private String getTopBarTitle(){
@@ -163,7 +158,7 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.qmui_topbar_item_left_back:
                 finish();
-            case R.drawable.submit_exam:
+            case R.drawable.filtrate_resource:
                 showResourceTypes();
                 break;
         }

@@ -48,7 +48,7 @@ public class TeacherMainActivity extends AppCompatActivity {
         mTabSegment.setIndicatorWidthAdjustContent(false);
         mTabSegment.setDefaultTabIconPosition(QMUITabSegment.ICON_POSITION_TOP);
         QMUITabSegment.Tab statistic = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(TeacherMainActivity.this, R.drawable.ic_tabbar_home),
+                ContextCompat.getDrawable(TeacherMainActivity.this, R.drawable.ic_tabbar_statis),
                 null,
                 "统计中心",true
         );

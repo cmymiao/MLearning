@@ -714,11 +714,7 @@ public class MineFragment extends Fragment {
                             }
                             BmobUser.logOut();//退出当前用户
                             LoginActivity.actionStart(getActivity(), false);
-//                            if(user.getIdentity().equals("student")){
                                 parentActivityS.finish();
-//                            }else {
-//                                parentActivityT.finish();
-//                            }
                         }
                     });
             Sbuilder.create().show();
@@ -745,11 +741,7 @@ public class MineFragment extends Fragment {
                             }
                             BmobUser.logOut();//退出当前用户
                             LoginActivity.actionStart(getActivity(), false);
-//                            if(user.getIdentity().equals("student")){
-//                            parentActivityS.finish();
-//                            }else {
-                                parentActivityT.finish();
-//                            }
+                            parentActivityT.finish();
                         }
                     });
             Tbuilder.create().show();

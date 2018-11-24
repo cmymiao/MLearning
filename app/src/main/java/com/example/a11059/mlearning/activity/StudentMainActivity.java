@@ -2,27 +2,18 @@ package com.example.a11059.mlearning.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.example.a11059.mlearning.R;
 import com.example.a11059.mlearning.adapter.StudentMainPagerAdapter;
-import com.example.a11059.mlearning.entity.User;
-import com.example.a11059.mlearning.fragment.LearnFragment;
-import com.example.a11059.mlearning.utils.UtilDatabase;
 import com.example.a11059.mlearning.utils.UtilUI;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUIViewPager;
-
-import java.lang.ref.WeakReference;
-
-import cn.bmob.v3.BmobUser;
 
 public class StudentMainActivity extends AppCompatActivity {
 
@@ -57,7 +48,7 @@ public class StudentMainActivity extends AppCompatActivity {
         mTabSegment.setIndicatorWidthAdjustContent(false);
         mTabSegment.setDefaultTabIconPosition(QMUITabSegment.ICON_POSITION_TOP);
         QMUITabSegment.Tab quiz = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(StudentMainActivity.this, R.drawable.ic_tabbar_home),
+                ContextCompat.getDrawable(StudentMainActivity.this, R.drawable.ic_tabbar_quize),
                 null,
                 "问答",true
         );

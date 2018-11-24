@@ -88,6 +88,8 @@ public class CustomMediaController extends MediaController {
         mFileName = (TextView) v.findViewById(R.id.mediacontroller_filename);
         if (mFileName != null) {
             mFileName.setText(videoname);
+        }else {
+            mFileName.setText("未知名称");
         }
         mVolumeBrightnessLayout = (RelativeLayout) v.findViewById(R.id.operation_volume_brightness);
         mOperationBg = (ImageView) v.findViewById(R.id.operation_bg);

@@ -162,6 +162,7 @@ public class TeacherResourceActivity extends AppCompatActivity implements View.O
         switch (v.getId()){
             case R.id.qmui_topbar_item_left_back:
                 finish();
+                break;
             case R.drawable.submit_exam:
                 showResourceTypes();
                 break;

@@ -33,21 +33,6 @@
                 android:singleLine="true"
                 android:text="file name" />
 
-            <!--<ImageButton-->
-            <!--android:id="@+id/mediacontroller_share"-->
-            <!--android:layout_width="50dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:background="@null"-->
-            <!--android:src="@drawable/ic_action_share_without_padding" />-->
-
-            <!--<ImageButton-->
-            <!--android:id="@+id/mediacontroller_favorite"-->
-            <!--android:layout_width="50dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_toLeftOf="@id/mediacontroller_share"-->
-            <!--android:background="@null"-->
-            <!--android:src="@drawable/ic_action_favorites" />-->
         </RelativeLayout>
 
         <ImageButton
