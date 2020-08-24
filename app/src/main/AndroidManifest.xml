@@ -21,6 +21,12 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
+
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.example.a11059.mlearning.BmobContentProvider">
+        </provider>
+
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -52,7 +58,8 @@
         <activity android:name=".activity.ResourceActivity" />
         <activity android:name=".activity.StudentStatisticActivity" />
         <activity android:name=".activity.PdfViewActivity" />
-        <activity android:name=".activity.VideoActivity"/>
+        <activity android:name=".activity.VideoActivity"
+/>
         <activity android:name=".activity.StudentInfoActivity"/>
         <activity android:name=".activity.TeacherResourceActivity"/>
         <activity android:name=".activity.StatisticActivity"/>

@@ -29,8 +29,8 @@ public class CustomMediaController extends MediaController {
     //控制提示窗口的显示
     private static final int HIDEFRAM = 0;
     private GestureDetector mGestureDetector;
-    //返回按钮
-    private ImageButton img_back;
+    //返回按钮;切换全屏;锁屏
+    private ImageButton img_back, switch_screen,mLockScreenButton ;
     //文件名
     private TextView mFileName;
     private VideoView videoView;
@@ -55,6 +55,8 @@ public class CustomMediaController extends MediaController {
     //当前亮度
     private float mBrightness = -1f;
 
+    private RelativeLayout layout_top,layout_bottom;
+    private boolean isScreenLock = false;
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

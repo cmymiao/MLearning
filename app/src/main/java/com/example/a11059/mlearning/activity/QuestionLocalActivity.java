@@ -22,6 +22,7 @@ import com.example.a11059.mlearning.adapter.MistakeRvAdapter;
 import com.example.a11059.mlearning.entity.CollectionL;
 import com.example.a11059.mlearning.entity.MistakeL;
 import com.example.a11059.mlearning.entity.RecordL;
+import com.example.a11059.mlearning.entity.User;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
@@ -149,9 +150,9 @@ public class QuestionLocalActivity extends AppCompatActivity implements View.OnC
                     e.printStackTrace();
                 }
                 if(currentMode == START_MODE_MISTAKE){
-                    mErrorList = DataSupport.where("username = ?", BmobUser.getCurrentUser().getUsername()).find(MistakeL.class);
+                    mErrorList = DataSupport.where("username = ?", BmobUser.getCurrentUser(User.class).getUsername()).find(MistakeL.class);
                 } else if(currentMode == START_MODE_COLLECTION){
-                    mCollectionList = DataSupport.where("username = ?", BmobUser.getCurrentUser().getUsername()).find(CollectionL.class);
+                    mCollectionList = DataSupport.where("username = ?", BmobUser.getCurrentUser(User.class).getUsername()).find(CollectionL.class);
                 } else{
                     mRecordList = DataSupport.findAll(RecordL.class);
                 }

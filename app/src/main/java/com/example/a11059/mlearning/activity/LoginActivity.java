@@ -277,7 +277,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startTeacherMainActivity();
             }
         }
-
     }
 
     private void loginFailAction(int errorCode){

@@ -24,6 +24,7 @@ import com.example.a11059.mlearning.entity.Question;
 import com.example.a11059.mlearning.entity.RecordL;
 import com.example.a11059.mlearning.entity.SequenceGroupL;
 import com.example.a11059.mlearning.entity.Unit;
+import com.example.a11059.mlearning.entity.User;
 import com.example.a11059.mlearning.utils.UtilDatabase;
 import com.example.a11059.mlearning.utils.UtilNetwork;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
@@ -111,6 +112,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     public MyHandler handler = new MyHandler(this);
 
     private List<Question> questionList = new ArrayList<>();
+    private CountDownTimer myTimer;
 
     public static class MyHandler extends Handler {
 
@@ -179,7 +181,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
     private void initLocalData(){
         maxGroupNo = 0;
-        String username = BmobUser.getCurrentUser().getUsername();
+        String username = BmobUser.getCurrentUser(User.class).getUsername();
         List<SequenceGroupL> groups = DataSupport.where("username = ?", username).find(SequenceGroupL.class);
         if(groups.size() == 1){
             currentUserSG = groups.get(0);
@@ -506,7 +508,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void setTimer(int time){
-        CountDownTimer myTimer = new CountDownTimer(time*1000, 1000) {
+        myTimer = new CountDownTimer(time*1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int time = (int)millisUntilFinished / 1000;
@@ -618,5 +620,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         }
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myTimer != null){
+            myTimer.cancel();
+        }
     }
 }

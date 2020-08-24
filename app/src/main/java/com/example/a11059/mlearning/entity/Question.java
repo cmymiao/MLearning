@@ -20,7 +20,7 @@ public class Question extends BmobObject {
     private Integer courseId;
     private Integer unitId;
     private String knowledgeId;
-    private Integer difficulty;
+    private Float difficulty;
     private Integer totalNum;
     private Integer rightNum;
 
@@ -120,11 +120,11 @@ public class Question extends BmobObject {
         this.knowledgeId = knowledgeId;
     }
 
-    public Integer getDifficulty() {
+    public Float getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Integer difficulty) {
+    public void setDifficulty(Float difficulty) {
         this.difficulty = difficulty;
     }
 

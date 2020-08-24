@@ -1,12 +1,14 @@
 package com.example.a11059.mlearning.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,7 +22,7 @@ import io.vov.vitamio.MediaPlayer.OnInfoListener;
 import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.widget.VideoView;
 
-public class VideoActivity extends AppCompatActivity implements OnInfoListener, OnBufferingUpdateListener{
+public class VideoActivity extends Activity implements OnInfoListener, OnBufferingUpdateListener{
 
     /**
      * TODO: Set the path variable to a streaming video URL or a local media file
@@ -50,13 +52,16 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         Vitamio.isInitialized(getApplicationContext());
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         setContentView(R.layout.activity_video);
         mVideoView = (VideoView) findViewById(R.id.buffer);
         pb = (ProgressBar) findViewById(R.id.probar);
 
         downloadRateView = (TextView) findViewById(R.id.download_rate);
-        loadRateView = (TextView) findViewById(R.id.load_rate);
+//        loadRateView = (TextView) findViewById(R.id.load_rate);
         if (currentUrl == "") {
             // Tell the user to provide a media file URL/path.
             UtilUI.shortToast("视频不存在请重试");
@@ -74,7 +79,7 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
 
             mCustomMediaController.show(5000); //5s隐藏
             mVideoView.setMediaController(mCustomMediaController);
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
             mVideoView.setBufferSize(2048); //设置视频缓冲大小
             mVideoView.requestFocus();
             mVideoView.setOnInfoListener(this);
@@ -97,9 +102,9 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
                     mVideoView.pause();
                     pb.setVisibility(View.VISIBLE);
                     downloadRateView.setText("");
-                    loadRateView.setText("");
+//                    loadRateView.setText("");
                     downloadRateView.setVisibility(View.VISIBLE);
-                    loadRateView.setVisibility(View.VISIBLE);
+//                    loadRateView.setVisibility(View.VISIBLE);
 
                 }
                 break;
@@ -107,7 +112,7 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
                 mVideoView.start();
                 pb.setVisibility(View.GONE);
                 downloadRateView.setVisibility(View.GONE);
-                loadRateView.setVisibility(View.GONE);
+//                loadRateView.setVisibility(View.GONE);
                 break;
             case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
                 downloadRateView.setText("" + extra + "kb/s" + "  ");
@@ -118,7 +123,7 @@ public class VideoActivity extends AppCompatActivity implements OnInfoListener, 
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        loadRateView.setText(percent + "%");
+//        loadRateView.setText(percent + "%");
     }
 
     @Override
